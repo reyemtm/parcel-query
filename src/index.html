@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>COZ Parcel Query</title>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.css' type='text/css' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v1.2.0/mapbox-gl-draw.js'></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/Turf.js/5.1.6/turf.min.js'></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
+  <style>
+    /*chota tweaks*/
+    :root {
+      --font-family-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    }
+
+    .row {
+      margin-left: unset;
+      margin-right: unset;
+      max-width: 100%;
+    }
+
+    html,
+    body {
+      display: flex;
+      margin: 0;
+      height: 100%;
+    }
+
+    .sidebar {
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      left: 0;
+      transition: left 0.4s ease;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      width: 300px;
+      height: 100%;
+      text-align: center;
+      max-height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar .fill {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .sidebar footer {
+      margin: 0 0 0.5rem;
+    }
+
+    .map {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      /* height: 100%;
+      height: 100%;
+      width: calc(100vw - 300px); */
+      /* transition: width 0.3s ease-in-out; */
+    }
+    .mapboxgl-ctrl-top-left,
+    .mapboxgl-ctrl-bottom-left {
+      left: 300px;
+      transition: left 0.4s ease
+    }
+
+    /**
+    * Chota and other Custom CSS
+    **/
+
+    .button {
+      margin: 0.5rem;
+      width: 200px;
+      border-radius: 3px;
+      border: solid thin rgba(0, 0, 0, 0.5);
+      background-color: white;
+      ;
+    }
+
+    .button.outline {
+      background-color: white;
+    }
+
+    .button+.button {
+      margin: 0.5rem;
+    }
+
+    .button.error.outline {
+      color: var(--color-error);
+      border-color: var(--color-error);
+    }
+
+    .button.active {
+      background: gold;
+      border-color: goldenrod;
+    }
+
+    /*mapbox*/
+    .mapboxgl-ctrl-group:not(:empty) {
+      -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+      -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+    }
+
+    .mapboxgl-ctrl-group>button {
+      width: 36px;
+      height: 37px;
+      border-radius: inherit;
+    }
+
+    .mapboxgl-ctrl-group,
+    .mapboxgl-ctrl-geocoder,
+    .mapboxgl-ctrl-geocoder ul {
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+      /* box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12); */
+    }
+
+    .mapboxgl-canvas:focus {
+      outline: none;
+    }
+    .mapboxgl-popup-close-button {
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body class="coz">
+  <div class="sidebar">
+    <h2 class="is-center" style="margin: 1rem">COZ Parcel Query</h2>
+    <hr>
+    <div class="container">
+      <div class="row is-center">
+        <p class="text-center">
+          Click the box to select features. Click the clear button to clear the selected features.
+        </p>
+        <!-- <button class="button outline active" data-type="select">Select Parcels</button> -->
+        <!-- <button class="button dark outline" data-type="single">Single Select</button> -->
+        <button class="button dark outline" data-type="fetch" disabled>Fetch Parcel Data</button>
+      </div>
+    </div>
+    <hr>
+    <div class="container fill">
+      <div class="info-box" data-type="info">
+      </div>
+      <canvas id="chart"></canvas>
+    </div>
+    <hr>
+    <footer class="container">
+      <button class="button error outline" data-type="reset">Clear Selection</button>
+    </footer>
+  </div>
+  <div id="map" class="map"></div>
+  <script src="app.js"></script>
+
+</body>
+
+</html>

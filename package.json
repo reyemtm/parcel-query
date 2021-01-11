@@ -1,0 +1,38 @@
+{
+  "name": "parcel-query",
+  "version": "0.0.1",
+  "description": "Query parcel data and extract parcel values over time. Built with Mapbox. Testing Phase",
+  "main": "src/index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html --public-url ./",
+    "deploy": "npm run build && node deploy",
+    "docs": "node_modules/.bin/jsdoc --configure jsdoc.json --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zanesville/parcel-query.git"
+  },
+  "author": "Malcolm Meyer",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/zanesville/parcel-query/issues"
+  },
+  "homepage": "https://github.com/zanesville/parcel-query#readme",
+  "browserslist": [
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ],
+  "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "robocopy": "^0.1.16"
+  },
+  "devDependencies": {
+    "cssnano": "^4.1.10",
+    "typedoc": "^0.19.2"
+  }
+}
